@@ -11,14 +11,14 @@ const app = express();
 
 // Settings
 app.set('views',config.hbs.dir);
-app.engine('.hbs',exphbs({
+app.engine(config.hbs.ext,exphbs({
     defaultLayout: config.hbs.defaLay,
     layoutsDir: path.join(app.get('views'),'layouts'),
     partialsDir: path.join(app.get('views'),'partials'),
-    extname: 'hbs',
+    extname: config.hbs.ext,
     helpers: require('./lib/handlebars'),
 }));
-app.set('view engine','.hbs');
+app.set('view engine',config.hbs.ext);
 
 
 // Middlewares
@@ -30,6 +30,10 @@ app.use(express.json());
 
 
 // Global Variables
+
+app.use((req,res,next)=>{
+    next();
+});
 
 // Routes
 app.use(require('./routes/index'));
