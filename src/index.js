@@ -37,10 +37,12 @@ app.use((req,res,next)=>{
 
 // Routes
 app.use(require('./routes/index'));
+app.use(require('./routes/authentication'));
+app.use(require('./routes/asesoria'));
 
 // Publics
 
-
+app.use(express.static(path.join(__dirname,'public')));
 
 // Starting Server
 
