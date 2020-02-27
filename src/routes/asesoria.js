@@ -9,7 +9,19 @@ router.get('/add',(req,res)=>{
 });
 
 router.post('/add',(req,res)=>{
-    res.send('receiver');
+
+    const { materia,lugar,descripcion,fechaMDY,fechaTim } = req.body;
+    const fecha = fechaMDY+" "+ fechaTim + ":00";
+        const newCita = {
+            materia,
+            lugar,
+            descripcion,
+            fecha
+        };
+        pool.query('INSERT INTO citas set ? ',[newCita]);
+        //console.log(newCita);
+        res.send('receiver');
+
 });
  
 
