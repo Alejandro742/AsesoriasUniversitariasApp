@@ -20,7 +20,7 @@ CREATE TABLE citas(
         asesor_id INTEGER UNSIGNED,
         estudiante_id INTEGER UNSIGNED,
         materia VARCHAR(100) NOT NULL,
-        lugar VARCHAR(100) NOT NULL,
+        lugar VARCHAR(100),
         fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
