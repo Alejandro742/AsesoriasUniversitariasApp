@@ -2,9 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+const pool = require('../database');
 
-router.get('/asesoria',(req,res)=>{
-    res.send('GET ASESORIA');
+router.get('/add',(req,res)=>{
+    res.render('asesorias/add');
 });
 
 
