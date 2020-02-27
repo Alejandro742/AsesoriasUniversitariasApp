@@ -20,8 +20,13 @@ router.post('/add',(req,res)=>{
         };
         pool.query('INSERT INTO citas set ? ',[newCita]);
         //console.log(newCita);
-        res.send('receiver');
+        res.redirect('/asesoria');
+});
 
+router.get('/',async(req,res)=>{
+    const citas = await pool.query('SELECT * FROM citas');
+    console.log(citas);
+    res.render('asesorias/list',{citas});
 });
  
 
