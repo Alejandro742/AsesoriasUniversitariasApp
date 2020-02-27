@@ -43,3 +43,6 @@ ALTER TABLE citas
 ADD CONSTRAINT fk_estudiante 
 FOREIGN KEY (estudiante_id)
 REFERENCES estudiantes(id);
+
+ALTER TABLE citas
+ADD descripcion TEXT NOT NULL;
