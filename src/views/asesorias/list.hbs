@@ -13,11 +13,20 @@
                             <p class="m-2"><strong>Estudiante: </strong> {{estudiante_id}}</p>
                         {{/if}}
                         
-                        <a href="#" class="btn btn-danger">Eliminar Cita</a>
-                        <a href="#" class="btn btn-info">Editar Cita</a>
+                        <a href="/asesoria/delete/{{id}}" class="btn btn-danger">Eliminar Cita</a>
+                        <a href="/asesoria/edit/{{id}}" class="btn btn-info">Editar Cita</a>
                     </div>
                 </div>
             </div>
+            {{else}}
+                <div class="col-md-4 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>
+                            No tienes asesorías.
+                        </p>
+                        <a href="/asesoria/add">Agregar Asesoría</a>
+                    </div>
+                </div>
         {{/each}}
     </div>
 
