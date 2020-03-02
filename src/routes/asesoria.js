@@ -19,7 +19,7 @@ router.post('/add',(req,res)=>{
             fecha
         };
         pool.query('INSERT INTO citas set ? ',[newCita]);
-        //console.log(newCita);
+        req.flash('success','Asesoría guardada correctamente');
         res.redirect('/asesoria');
 });
 
@@ -32,7 +32,9 @@ router.get('/',async(req,res)=>{
 router.get('/delete/:id',async(req,res)=>{
     const {id} = req.params;
     await pool.query('DELETE FROM citas WHERE id = ?',[id]);
+    req.flash('success','Asesoria removida');
     res.redirect('/asesoria');
+    
 });
 
 router.get('/edit/:id',async(req,res)=>{
@@ -51,8 +53,8 @@ router.post('/edit/:id',(req,res)=>{
         descripcion,
         fecha
     };
-    console.log(newAsesoria);
     pool.query('UPDATE citas SET ? WHERE id = ?',[newAsesoria,id]);
+    req.flash('success','Asesoria editada');
     res.redirect('/asesoria');
 })
  
