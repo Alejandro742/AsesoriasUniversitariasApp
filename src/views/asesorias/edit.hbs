@@ -1,0 +1,38 @@
+
+
+<div class="container p-4 text-center">
+    <h1 class="mb-5">Agregar Asesoría</h1>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/asesoria/edit/{{asesorias.id}}" method="POST">
+                        <div class="form-group">
+                            <input type="text" value="{{asesorias.materia}}" name="materia" id="" class="form-control" placeholder="Materia" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{asesorias.lugar}}" name="lugar" id="" class="form-control" placeholder="Lugar">
+                        </div>
+                        <div class="form-group">
+                            <textarea  name="descripcion" id="" placeholder="Descripción Asesoría" class="form-control" cols="30" rows="10">{{asesorias.descripcion}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Fecha: </label>
+                            <input type="date" name="fechaMDY" id="" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Hora: </label>
+                            <input type="time" name="fechaTim" id="" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">Guardar</button>
+                        </div>
+                        <div class="" id="banner">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

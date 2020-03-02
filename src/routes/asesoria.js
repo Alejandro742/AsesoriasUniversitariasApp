@@ -25,9 +25,36 @@ router.post('/add',(req,res)=>{
 
 router.get('/',async(req,res)=>{
     const citas = await pool.query('SELECT * FROM citas');
-    console.log(citas);
+    //console.log(citas);
     res.render('asesorias/list',{citas});
 });
+
+router.get('/delete/:id',async(req,res)=>{
+    const {id} = req.params;
+    await pool.query('DELETE FROM citas WHERE id = ?',[id]);
+    res.redirect('/asesoria');
+});
+
+router.get('/edit/:id',async(req,res)=>{
+    const {id} = req.params;
+    const asesorias = await pool.query('SELECT * FROM citas WHERE id = ?',[id]);
+    res.render('asesorias/edit',{asesorias:asesorias[0]});
+});
+
+router.post('/edit/:id',(req,res)=>{
+    const {id} = req.params;
+    const {materia,lugar,descripcion,fechaMDY,fechaTim} = req.body;
+    const fecha = fechaMDY+" "+ fechaTim + ":00";
+    const newAsesoria = {
+        materia,
+        lugar,
+        descripcion,
+        fecha
+    };
+    console.log(newAsesoria);
+    pool.query('UPDATE citas SET ? WHERE id = ?',[newAsesoria,id]);
+    res.redirect('/asesoria');
+})
  
 
 module.exports = router;
