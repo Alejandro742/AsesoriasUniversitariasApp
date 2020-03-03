@@ -46,3 +46,12 @@ REFERENCES estudiantes(id);
 
 ALTER TABLE citas
 ADD descripcion TEXT NOT NULL;
+
+ALTER TABLE citas
+DROP fecha;
+
+ALTER TABLE citas
+ADD dia VARCHAR(15) NOT NULL;
+
+ALTER TABLE citas
+ADD hora VARCHAR(15) NOT NULL;
