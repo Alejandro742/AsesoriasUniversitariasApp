@@ -5,6 +5,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const pool = require('../database');
+const helpers = require('../lib/helpers');
 
 passport.use('local.signup',new LocalStrategy({
     usernameField: 'nombre',
@@ -16,14 +17,21 @@ passport.use('local.signup',new LocalStrategy({
     const newUser = {
         nombre,
         email,
-        centro_id,
+        centro_id:parseInt(centro_id,10),
         password
     };
-    await pool.query('INSERT INTO estudiantes SET ?',newUser)
+    newUser.password = await helpers.encryptPassword(password);
+    const result = await pool.query('INSERT INTO estudiantes SET ?',[newUser]);
+    newUser.id = result.insertId;
+    return done(null,newUser);
 
 }));
 
-// passport.serializeUser((usr,done) =>{
+passport.serializeUser((usr,done) =>{
+    done(null,usr.id);
+});
 
-// });
-
+passport.deserializeUser(async(id,done)=>{
+    const rows = await pool.query('SELECT * FROM estudiantes WHERE id = ?',[id]);
+    done(null,rows[0]);
+});
