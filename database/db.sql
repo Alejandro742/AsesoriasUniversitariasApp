@@ -55,3 +55,6 @@ ADD dia VARCHAR(15) NOT NULL;
 
 ALTER TABLE citas
 ADD hora VARCHAR(15) NOT NULL;
+
+ALTER TABLE estudiantes 
+MODIFY password VARCHAR(100);
