@@ -10,13 +10,13 @@ router.get('/add',(req,res)=>{
 
 router.post('/add',(req,res)=>{
 
-    const { materia,lugar,descripcion,fechaMDY,fechaTim } = req.body;
-    const fecha = fechaMDY+" "+ fechaTim + ":00";
+    const { materia,lugar,descripcion,dia,hora } = req.body;
         const newCita = {
             materia,
             lugar,
             descripcion,
-            fecha
+            dia,
+            hora
         };
         pool.query('INSERT INTO citas set ? ',[newCita]);
         req.flash('success','Asesoría guardada correctamente');
@@ -45,15 +45,15 @@ router.get('/edit/:id',async(req,res)=>{
 
 router.post('/edit/:id',(req,res)=>{
     const {id} = req.params;
-    const {materia,lugar,descripcion,fechaMDY,fechaTim} = req.body;
-    const fecha = fechaMDY+" "+ fechaTim + ":00";
-    const newAsesoria = {
-        materia,
-        lugar,
-        descripcion,
-        fecha
-    };
-    pool.query('UPDATE citas SET ? WHERE id = ?',[newAsesoria,id]);
+    const { materia,lugar,descripcion,dia,hora } = req.body;
+        const newCita = {
+            materia,
+            lugar,
+            descripcion,
+            dia,
+            hora
+        };
+    pool.query('UPDATE citas SET ? WHERE id = ?',[newCita,id]);
     req.flash('success','Asesoria editada');
     res.redirect('/asesoria');
 })
