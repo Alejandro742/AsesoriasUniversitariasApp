@@ -58,3 +58,19 @@ ADD hora VARCHAR(15) NOT NULL;
 
 ALTER TABLE estudiantes 
 MODIFY password VARCHAR(100);
+
+ALTER TABLE centros ADD cantidad INTEGER UNSIGNED;
+
+
+CREATE TRIGGER cantidades AFTER INSERT ON estudiantes
+FOR EACH ROW
+BEGIN
+UPDATE centros set cantidad = cantidad + 1 WHERE id = new.centro_id;
+END
+//
+delimiter ;
+
+DELETE FROM centros;
+
+INSERT INTO centros(nombre,cantidad)
+VALUE("CUCEI",0),("CUCSH",0),("CUCEA",0),("CUCS",0),("CUCBA",0),("CUAAD",0);
