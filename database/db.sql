@@ -72,5 +72,7 @@ delimiter ;
 
 DELETE FROM centros;
 
-INSERT INTO centros(nombre,cantidad)
+INSERT INTO centros(nombre)
 VALUE("CUCEI",0),("CUCSH",0),("CUCEA",0),("CUCS",0),("CUCBA",0),("CUAAD",0);
+
+ALTER TABLE centros ALTER cantidad SET DEFAULT 0;
