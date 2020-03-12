@@ -1,0 +1,55 @@
+"GIT rm --cached <file_name>": es para deshacer el GIT add o sea hacer "unstage".
+
+"GIT add .": Añade todos los archivos de un jalón
+
+"GIT log <file_name>": Esto es para ver la historia de los commits del archivo
+
+"GIT show <file_name>": este comando es para mostrar los cambios (historia) del archivo
+
+"GIT diff <commit_code> <commit_code>": este comando permite comparar entre archivos, como era el archivo antes y como es hoy.Por ejemplo saber la diferencia entre el commit 3 y el 4.
+
+"GIT reset <commit_code> --hard": eso hace que volvamos al commit que le indiquemos, eliminando los commits por delante al que le dimos como parametro.
+
+"GIT reset <commit_code> --soft": esto te regresa al commit que le indiques en el parametro pero si tienes cambios en stage éstos se mantendrán.
+
+"GIT diff": si tenemos un archivo en stage(le hicimos un GIT add) y después modificamos ese mismo archivo sin antes haberlo hecho un commit al principio entonces GIT diff nos ayuda a comparar las nuevas modificaciones (unstage) con las que ya estaban en stage.
+
+"GIT restore --staged <file_name>": cuando tenemos el problema de arriba entonces usamos este comando para actualizar el archivo y que sea uno solo.
+
+"GIT log --stat": esto es para ver de manera más especifica los cambios que se hicieron en los commits.
+
+"GIT checkout <commit_code> <file_name>": Te regresa a la versión del archivo del commit que le pasaste como parametro y te da la opción de quedarte en esa versión al hacer un commit.
+
+"GIT checkout master <file_name>"; es para regresar a la última versión del archvio cuando realizaste el comando de arriba.
+
+"ESC + SHIF + ZZ": Para salir de la ventana de BIM
+
+"GIT push": Envía tus cambios al repositorio remoto
+
+"GIT fetch": trae al repositorio local todos los cambios que se han hecho al repositorio remoto, es decir, si alguien cambio algo y lo mando al repo remoto y tú quieres tener ese cambio entonces usas GIT fetch (ESTO NO ALTEREA TU ARCHIVO, NO HACE UN MERGE)
+
+"GIT merge": Si quieres que tus archivos se modifiquen con la versión más actual de los commits entonces primero usas GIT gect y después haces un merge.
+
+"GIT pull": es la mezcla de fetch y merge, toma los commits del repo remoto y los manda a tu repo local y después hace un merge.
+
+"*CAMBIAR DE RAMA SIN ANTES HACER CAMBIOS HACE QUE SE PIERDAN*"
+
+"GIT branch <branch_name>": crea una nueva rama
+
+"GIT checkout <branch_name>": cambia de rama
+
+"GIT pull origin master": Si haces un cambio en github y quieres traer esos cambios al repo local.
+
+"alias <alias_name> ='<command>'": es para crear alias de los comandos, esto sirve para comandos largos
+
+"GIT tag -a <versiong_tag> -m "<msg_tag>" <commit_code>": agrega un tag
+
+"GIT tag": lista de tags
+
+"GIT show-ref --tags": Muestra a que commit se refiere cada tag
+
+"GIT push origin --tags": envía los tags a github
+
+"GIT tag -d <tag_name>": elimina tags
+
+
