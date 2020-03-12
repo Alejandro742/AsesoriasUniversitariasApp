@@ -84,3 +84,4 @@ UPDATE centros set cantidad = cantidad - 1 WHERE id = new.centro_id;
 END
 //
 delimiter ;
+alex
