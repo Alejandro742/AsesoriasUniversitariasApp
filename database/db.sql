@@ -76,3 +76,11 @@ INSERT INTO centros(nombre)
 VALUE("CUCEI",0),("CUCSH",0),("CUCEA",0),("CUCS",0),("CUCBA",0),("CUAAD",0);
 
 ALTER TABLE centros ALTER cantidad SET DEFAULT 0;
+
+CREATE TRIGGER cantidades AFTER DELETE ON estudiantes
+FOR EACH ROW
+BEGIN
+UPDATE centros set cantidad = cantidad - 1 WHERE id = new.centro_id;
+END
+//
+delimiter ;
