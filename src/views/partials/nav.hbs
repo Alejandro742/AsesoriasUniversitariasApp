@@ -6,18 +6,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+        {{#if user}}
+            <li class="nav-item">
+              <a class="nav-link" href="/asesoria/add">Crear Asesoría</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Salir</a>
+            </li>
+        {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="/signin">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">Registrarme</a>
+            </li>
+        {{/if}}
+
       </ul>
     </div>
   </div>
