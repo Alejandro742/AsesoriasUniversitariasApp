@@ -1,5 +1,5 @@
 const express = require('express');
-
+const {isLoggedIn} = require('../lib/auth');
 const router = express.Router();
 const passport = require('passport');
 
@@ -25,11 +25,12 @@ router.post('/signin',(passport.authenticate('local.signin',{
     failureFlash:true,
 })));
 
-
-
-
-router.get('/profile',(req,res)=>{
-    res.send('Profile');
+router.get('/profile',isLoggedIn,(req,res)=>{
+    res.render('profile');
+});
+router.get('/logout',(req,res)=>{
+    req.logOut();
+    res.redirect('/signin');
 });
 
 module.exports = router;
