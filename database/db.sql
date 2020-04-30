@@ -61,26 +61,33 @@ MODIFY password VARCHAR(100);
 
 ALTER TABLE centros ADD cantidad INTEGER UNSIGNED;
 
-
+DELIMITER //
 CREATE TRIGGER cantidades AFTER INSERT ON estudiantes
 FOR EACH ROW
 BEGIN
 UPDATE centros set cantidad = cantidad + 1 WHERE id = new.centro_id;
 END
 //
-delimiter ;
+DELIMITER ;
 
 DELETE FROM centros;
 
 INSERT INTO centros(nombre)
-VALUE("CUCEI",0),("CUCSH",0),("CUCEA",0),("CUCS",0),("CUCBA",0),("CUAAD",0);
+VALUE("CUCEI"),("CUCSH"),("CUCEA"),("CUCS"),("CUCBA"),("CUAAD");
 
 ALTER TABLE centros ALTER cantidad SET DEFAULT 0;
 
+DELIMITER //
 CREATE TRIGGER cantidades AFTER DELETE ON estudiantes
 FOR EACH ROW
 BEGIN
-UPDATE centros set cantidad = cantidad - 1 WHERE id = new.centro_id;
+UPDATE centros set cantidad = cantidad - 1 WHERE id = centro_id;
 END
 //
-delimiter ;
+DELIMITER ;
+
+
+ALTER TABLE citas DROP FOREIGN KEY fk_asesor;
+ALTER TABLE citas DROP asesor_id;
+DROP TABLE asesores;
+
