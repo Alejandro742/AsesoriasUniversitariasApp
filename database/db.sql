@@ -62,7 +62,7 @@ MODIFY password VARCHAR(100);
 ALTER TABLE centros ADD cantidad INTEGER UNSIGNED;
 
 DELIMITER //
-CREATE TRIGGER cantidades AFTER INSERT ON estudiantes
+CREATE TRIGGER suma_cant_centro AFTER INSERT ON estudiantes
 FOR EACH ROW
 BEGIN
 UPDATE centros set cantidad = cantidad + 1 WHERE id = new.centro_id;
@@ -78,7 +78,7 @@ VALUE("CUCEI"),("CUCSH"),("CUCEA"),("CUCS"),("CUCBA"),("CUAAD");
 ALTER TABLE centros ALTER cantidad SET DEFAULT 0;
 
 DELIMITER //
-CREATE TRIGGER cantidades AFTER DELETE ON estudiantes
+CREATE TRIGGER resta_cant_centro AFTER DELETE ON estudiantes
 FOR EACH ROW
 BEGIN
 UPDATE centros set cantidad = cantidad - 1 WHERE id = centro_id;
