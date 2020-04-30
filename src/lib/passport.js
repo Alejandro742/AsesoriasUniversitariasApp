@@ -27,8 +27,8 @@ passport.use('local.signup',new LocalStrategy({
 
 }));
 
-passport.serializeUser((usr,done) =>{
-    done(null,usr.id);
+passport.serializeUser((user,done) =>{
+    done(null,user.id);
 });
 
 passport.deserializeUser(async(id,done)=>{
