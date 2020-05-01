@@ -28,12 +28,21 @@ router.post('/add',isLoggedIn,(req,res)=>{
          res.redirect('/asesoria/list_asesor');
 });
 
+/* RUTA PARA VER LAS ASESORÍAS CREADAS POR NO TOMADAS POR ALGUIEN */
 router.get('/list_asesor',isLoggedIn,async(req,res)=>{
-    const citas = await pool.query(`SELECT * FROM citas WHERE asesor_id = ${req.user.id}`);
-    //console.log(citas);
-    res.render('asesorias/list',{citas});
+    const citas = await pool.query(`CALL asesorias_no_tomadas(${req.user.id})`);
+    //console.log(citas[0]);
+    res.render('asesorias/list_asesorias_libres',{citas:citas[0]});
 });
 
+/* RUTA PARA VER LAS ASESORÍAS CREADAS Y TOMADAS POR ALGUIEN */
+router.get('/list_asesor_tomadas',isLoggedIn,async(req,res)=>{
+    const citas = await pool.query(`CALL mis_asesorias_tomadas(${req.user.id})`);
+    //console.log(citas[0]);
+    res.render('asesorias/list_asesor_tomadas',{citas:citas[0]});
+});
+
+/* RUTA PARA VER LAS ASESORIAS TOMADAS */
 router.get('/list_asesorado',isLoggedIn,async(req,res)=>{
     const citas = await pool.query(`CALL asesoria_lado_asesorado(${req.user.id})`);
     //console.log(citas[0]);
