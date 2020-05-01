@@ -94,7 +94,7 @@ ADD CONSTRAINT fk_asesor
 FOREIGN KEY (asesor_id)
 REFERENCES estudiantes(id);
 
-
+/* PROCEDIMIENTO PARA VER LAS ASESORÍAS DISPONIBLES EN EL HOME */
 DELIMITER //
 CREATE PROCEDURE lista_asesorias_home(IN user_id INT)
 BEGIN
@@ -103,6 +103,7 @@ END
 //
 DELIMITER ;
 
+/* PROCEMINETO PARA VER LA LAS ASESORIAS QUE UN USER HA TOMADO */
 DELIMITER //
 CREATE PROCEDURE asesoria_lado_asesorado(IN user_id INT)
 BEGIN
@@ -114,3 +115,24 @@ BEGIN
     WHERE estudiante_id = user_id;
 END//
 DELIMITER ;
+
+/* PROCEDIMIENTO PARA VER ASESORIAS CREADAS PERO NO TOMADAS AUN */
+
+CREATE PROCEDURE asesorias_no_tomadas(IN user_id INT)
+BEGIN
+    SELECT * FROM citas WHERE asesor_id = user_id AND estudiante_id IS NULL;
+END//
+    
+/* PROCEDIMIENTO PARA VER LAS ASESORÍAS CREADAS Y TOMADAS POR ALGUIEN */
+
+CREATE PROCEDURE mis_asesorias_tomadas(IN user_id INT)
+BEGIN
+    SELECT 
+    citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
+    estudiantes.nombre, estudiantes.email
+    FROM citas
+    INNER JOIN estudiantes ON citas.estudiante_id = estudiantes.id
+    WHERE asesor_id = user_id AND estudiante_id IS NOT NULL;
+END//
+
+
