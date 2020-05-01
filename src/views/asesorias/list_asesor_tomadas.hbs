@@ -1,0 +1,30 @@
+<div class="container p-4 text-center">
+    <h1>Mis Asesorías (Asesorado)</h1>
+    <div class="row">
+        {{#each citas}}
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase" style="color:green;">{{materia}}</h5>
+                        <p class="m-2"><strong>Lugar:</strong> {{lugar}}</p>
+                        <p class="m-2"><strong>Descripción:</strong> {{descripcion}}</p>
+                        <p class="m-2"><strong>Fecha de cita:</strong> {{dia}} {{hora}}</p>
+                        <p class="m-2"><strong>Alumno: </strong>{{nombre}}</p>
+                        <p class="m-2"><strong>Correo Alumno: </strong>{{email}}</p>                        
+                        <a href="/asesoria/edit/{{id}}" class="btn btn-info">Abandonar Cita</a>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+                <div class="col-md-4 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>
+                            No tienes asesorías.
+                        </p>
+                        <a href="/">Apúntate a una!</a>
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+
+</div>
