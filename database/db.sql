@@ -34,10 +34,6 @@ ADD CONSTRAINT fk_centro
 FOREIGN KEY (centro_id)
 REFERENCES centros(id);
 
-ALTER TABLE citas
-ADD CONSTRAINT fk_asesor 
-FOREIGN KEY (asesor_id)
-REFERENCES asesores(id);
 
 ALTER TABLE citas
 ADD CONSTRAINT fk_estudiante 
@@ -91,3 +87,30 @@ ALTER TABLE citas DROP FOREIGN KEY fk_asesor;
 ALTER TABLE citas DROP asesor_id;
 DROP TABLE asesores;
 
+ALTER TABLE citas ADD asesor_id INT UNSIGNED;
+
+ALTER TABLE citas
+ADD CONSTRAINT fk_asesor 
+FOREIGN KEY (asesor_id)
+REFERENCES estudiantes(id);
+
+
+DELIMITER //
+CREATE PROCEDURE lista_asesorias_home(IN user_id INT)
+BEGIN
+    SELECT * FROM citas WHERE estudiante_id IS NULL AND asesor_id != user_id;
+END
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE asesoria_lado_asesorado(IN user_id INT)
+BEGIN
+    SELECT 
+    citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
+    estudiantes.nombre, estudiantes.email
+    FROM citas
+    INNER JOIN estudiantes ON citas.asesor_id = estudiantes.id
+    WHERE estudiante_id = user_id;
+END//
+DELIMITER ;
