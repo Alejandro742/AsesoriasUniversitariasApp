@@ -5,7 +5,7 @@ const pool = require('../database');
 
 
 router.get('/',async(req,res)=>{
-    const citas = await pool.query(`CALL lista_asesorias_home(${req.user.id})`);
+    const citas = await pool.query(`CALL lista_asesorias_home()`);
     res.render('asesorias/main_list',{citas:citas[0]});
 });
 
