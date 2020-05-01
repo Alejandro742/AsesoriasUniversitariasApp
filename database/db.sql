@@ -96,9 +96,9 @@ REFERENCES estudiantes(id);
 
 /* PROCEDIMIENTO PARA VER LAS ASESORÍAS DISPONIBLES EN EL HOME */
 DELIMITER //
-CREATE PROCEDURE lista_asesorias_home(IN user_id INT)
+CREATE PROCEDURE lista_asesorias_home()
 BEGIN
-    SELECT * FROM citas WHERE estudiante_id IS NULL AND asesor_id != user_id;
+    SELECT * FROM citas WHERE estudiante_id IS NULL;
 END
 //
 DELIMITER ;
