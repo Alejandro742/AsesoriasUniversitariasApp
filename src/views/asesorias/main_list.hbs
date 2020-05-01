@@ -1,5 +1,5 @@
 <div class="container p-4 text-center">
-    <h1>Mis Asesorías (Asesor)</h1>
+    <h1>Asesorías Disponibles</h1>
     <div class="row">
         {{#each citas}}
             <div class="col-md-6">
@@ -9,12 +9,7 @@
                         <p class="m-2"><strong>Lugar:</strong> {{lugar}}</p>
                         <p class="m-2"><strong>Descripción:</strong> {{descripcion}}</p>
                         <p class="m-2"><strong>Fecha de cita:</strong> {{dia}} {{hora}}</p>
-                        {{#if estudiante_id}}
-                            <p class="m-2"><strong>Estudiante: </strong> {{estudiante_id}}</p>
-                        {{/if}}
-                        
-                        <a href="/asesoria/delete/{{id}}" class="btn btn-danger">Eliminar Cita</a>
-                        <a href="/asesoria/edit/{{id}}" class="btn btn-info">Editar Cita</a>
+                        <a href="/tomar_asesoria/{{id}}" class="btn btn-info">Tomas Asesoría</a>
                     </div>
                 </div>
             </div>
@@ -22,9 +17,9 @@
                 <div class="col-md-4 mx-auto">
                     <div class="card card-body text-center">
                         <p>
-                            No tienes asesorías.
+                            No hay asesorías.
                         </p>
-                        <a href="/asesoria/add">Agregar Asesoría</a>
+                        <a href="/asesoria/add">Crea Una!</a>
                     </div>
                 </div>
         {{/each}}
