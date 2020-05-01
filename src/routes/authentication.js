@@ -2,6 +2,7 @@ const express = require('express');
 const {isLoggedIn,isNotLoggedIn} = require('../lib/auth');
 const router = express.Router();
 const passport = require('passport');
+const pool = require('../database');
 
 
 router.get('/signup',(req,res)=>{
@@ -25,8 +26,9 @@ router.post('/signin',(passport.authenticate('local.signin',{
     failureFlash:true,
 })));
 
-router.get('/profile',isLoggedIn,(req,res)=>{
-    res.render('profile');
+router.get('/profile',isLoggedIn,async(req,res)=>{
+    const data_centro = await pool.query(`SELECT nombre FROM centros WHERE id = ${req.user.centro_id}`);
+    res.render('profile',{centro:data_centro[0]});
 });
 router.get('/logout',(req,res)=>{
     req.logOut();
