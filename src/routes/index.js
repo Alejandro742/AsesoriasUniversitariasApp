@@ -5,7 +5,15 @@ const pool = require('../database');
 const {isLoggedIn} = require('../lib/auth');
 
 router.get('/',async(req,res)=>{
-    const citas = await pool.query(`CALL lista_asesorias_home()`);
+
+    if(req.user){
+        query = `CALL lista_asesorias_home_sesion(${req.user.id})`;
+    }
+    else {
+        query = "CALL lista_asesorias_home()";
+    }
+    console.log(query);
+    const citas = await pool.query(query);
     res.render('asesorias/main_list',{citas:citas[0]});
 });
 
