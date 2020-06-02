@@ -98,7 +98,11 @@ REFERENCES estudiantes(id);
 DELIMITER //
 CREATE PROCEDURE lista_asesorias_home()
 BEGIN
-    SELECT * FROM citas WHERE estudiante_id IS NULL;
+    SELECT citas.id, citas.estudiante_id, citas.materia, citas.lugar, citas.descripcion, citas.dia,citas.hora, citas.asesor_id,
+    estudiantes.nombre AS Nombre_Asesor
+    FROM citas
+    INNER JOIN estudiantes ON citas.asesor_id = estudiantes.id
+    WHERE citas.estudiante_id IS NULL;
 END
 //
 DELIMITER ;
@@ -107,7 +111,11 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE lista_asesorias_home_sesion(IN user_sesion INT)
 BEGIN
-    SELECT * FROM citas WHERE estudiante_id IS NULL AND asesor_id != user_sesion;
+    SELECT citas.id, citas.estudiante_id, citas.materia, citas.lugar, citas.    descripcion, citas.dia,citas.hora, citas.asesor_id,
+    estudiantes.nombre AS Nombre_Asesor
+    FROM citas
+    INNER JOIN estudiantes ON citas.asesor_id = estudiantes.id
+    WHERE citas.estudiante_id IS NULL AND citas.asesor_id != user_sesion;
 END
 //
 DELIMITER ;
