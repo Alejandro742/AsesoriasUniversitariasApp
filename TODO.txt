@@ -1,2 +1,1 @@
-- No pasa nada al tratar de salirte de una asesoria si eres alumno y profesor
 - Subir imagen de perfil con multer
