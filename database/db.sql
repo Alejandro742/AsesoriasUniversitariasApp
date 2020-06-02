@@ -142,14 +142,15 @@ END//
     
 /* PROCEDIMIENTO PARA VER LAS ASESORÍAS CREADAS Y TOMADAS POR ALGUIEN */
 
+DELIMITER //
 CREATE PROCEDURE mis_asesorias_tomadas(IN user_id INT)
 BEGIN
     SELECT 
-    citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
+    citas.id, citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
     estudiantes.nombre, estudiantes.email
     FROM citas
     INNER JOIN estudiantes ON citas.estudiante_id = estudiantes.id
     WHERE asesor_id = user_id AND estudiante_id IS NOT NULL;
 END//
-
+DELIMITER ;
 
