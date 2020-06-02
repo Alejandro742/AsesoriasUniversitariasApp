@@ -38,7 +38,6 @@ router.get('/list_asesor',isLoggedIn,async(req,res)=>{
 /* RUTA PARA VER LAS ASESORÍAS CREADAS Y TOMADAS POR ALGUIEN */
 router.get('/list_asesor_tomadas',isLoggedIn,async(req,res)=>{
     const citas = await pool.query(`CALL mis_asesorias_tomadas(${req.user.id})`);
-    //console.log(citas[0]);
     res.render('asesorias/list_asesor_tomadas',{citas:citas[0]});
 });
 
@@ -76,7 +75,14 @@ router.post('/edit/:id',isLoggedIn,(req,res)=>{
     pool.query('UPDATE citas SET ? WHERE id = ?',[newCita,id]);
     req.flash('success','Asesoria editada');
     res.redirect('/asesoria/list_asesor');
-})
+});
+
+router.get('/dismiss/:id',async(req,res)=>{
+    const {id} = req.params;
+    await pool.query(`UPDATE citas SET estudiante_id = NULL WHERE id = ${id}`);
+    req.flash('success',"Aseosría Abandonada");
+    res.redirect('/');
+});
  
 
 module.exports = router;
