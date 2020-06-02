@@ -125,7 +125,7 @@ DELIMITER //
 CREATE PROCEDURE asesoria_lado_asesorado(IN user_id INT)
 BEGIN
     SELECT 
-    citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
+    citas.id, citas.materia, citas.lugar, citas.descripcion,citas.dia,citas.hora,
     estudiantes.nombre, estudiantes.email
     FROM citas
     INNER JOIN estudiantes ON citas.asesor_id = estudiantes.id
