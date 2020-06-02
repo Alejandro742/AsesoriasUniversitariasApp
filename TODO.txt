@@ -1,3 +1,4 @@
 - Mensajes flash en caso de no encontrar el user al iniciar sesion.
 - No pasa nada al tratar de salirte de una asesoria si eres alumno y profesor
 - Subir imagen de perfil con multer
+- Añadir nombre de asesor en asesorias globales.
