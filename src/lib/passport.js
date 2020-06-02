@@ -12,18 +12,17 @@ passport.use('local.signin',new LocalStrategy({
     passwordField:"password",
     passReqToCallback:true
 },async(req,nombre,password,done)=>{
-
     const rows = await pool.query(`SELECT * FROM estudiantes WHERE email = "${req.body.email}"`);
     if(rows){
         const user = rows[0];
-        const isValidPassword = await helpers.matchPassword(req.body.password,user.password);
-        if(isValidPassword){
+        const isValidPassword = await helpers.matchPassword(req.body.password.trim(),user.password);
+        if(isValidPassword && nombre.trim() === user.nombre){
             //contra correcta
             done(null,user,req.flash('success','Welcome'+ user.nombre));
         }
         else{
             //contra incorrecta
-            done(null,false,req.flash("message","Contraseña incorrecta"));
+            done(null,false,req.flash("message","Datos Incorrectos"));
         }
     }
     else{
@@ -45,10 +44,16 @@ passport.use('local.signup',new LocalStrategy({
         centro_id:parseInt(centro_id,10),
         password
     };
-    newUser.password = await helpers.encryptPassword(password);
-    const result = await pool.query('INSERT INTO estudiantes SET ?',[newUser]);
-    newUser.id = result.insertId;
-    return done(null,newUser);
+    const verifyExistence = await pool.query(`SELECT * FROM estudiantes WHERE email = "${newUser.email}"`);
+    if(!verifyExistence[0]){
+        newUser.password = await helpers.encryptPassword(password);
+        const result = await pool.query('INSERT INTO estudiantes SET ?',[newUser]);
+        newUser.id = result.insertId;
+        return done(null,newUser);
+    }
+    else{
+        return done(null,false,req.flash("message","Esta cuenta ya existse"));
+    }
 
 }));
 
