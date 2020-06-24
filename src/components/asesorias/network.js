@@ -4,11 +4,11 @@ const router = express.Router();
 const controller = require('./index');
 const {isLoggedIn} = require('../../lib/auth');
 
-router.get('/add',/*isLoggedIn,*/(req,res)=>{
+router.get('/add',isLoggedIn,(req,res)=>{
     res.render('asesorias/add');
 });
 
-router.post('/add',/*isLoggedIn,*/async(req,res)=>{
+router.post('/add',isLoggedIn,async(req,res)=>{
     try {
         await controller.handleInsertDate(req.body/*,req.user.id*/);
         req.flash('success','Asesoría guardada correctamente');
@@ -19,58 +19,81 @@ router.post('/add',/*isLoggedIn,*/async(req,res)=>{
 });
 
 /* RUTA PARA VER LAS ASESORÍAS CREADAS POR NO TOMADAS POR ALGUIEN */
-router.get('/list_asesor',/*isLoggedIn,*/async(req,res)=>{
-    const citas = await pool.query(`CALL asesorias_no_tomadas(${req.user.id})`);
-    //console.log(citas[0]);
-    res.render('asesorias/list_asesorias_libres',{citas:citas[0]});
+router.get('/list_asesor',isLoggedIn,async(req,res)=>{
+    try{
+        const citas = await controller.notTakenDates(req.user.id);
+        console.log(citas);
+        res.render('asesorias/list_asesorias_libres',{citas:citas[0]});
+    }catch(err){
+        console.error("Server Error: "+new Error(err));
+    }
 });
 
 /* RUTA PARA VER LAS ASESORÍAS CREADAS Y TOMADAS POR ALGUIEN */
-router.get('/list_asesor_tomadas',/*isLoggedIn,*/async(req,res)=>{
-    const citas = await pool.query(`CALL mis_asesorias_tomadas(${req.user.id})`);
-    res.render('asesorias/list_asesor_tomadas',{citas:citas[0]});
+router.get('/list_asesor_tomadas',isLoggedIn,async(req,res)=>{
+    try {
+        const citas = await controller.takenDatesBySomeone(req.user.id);
+        res.render('asesorias/list_asesor_tomadas',{citas:citas[0]});
+    } catch (error) {
+        console.error(new Error(error));
+    }
 });
 
 /* RUTA PARA VER LAS ASESORIAS TOMADAS */
-router.get('/list_asesorado',/*isLoggedIn,*/async(req,res)=>{
-    const citas = await pool.query(`CALL asesoria_lado_asesorado(${req.user.id})`);
-    //console.log(citas[0]);
-    res.render('asesorias/list_asesorado',{citas:citas[0]});
+router.get('/list_asesorado',isLoggedIn,async(req,res)=>{
+    try {
+        const citas = await controller.datesAdvisedSide(req.user.id);
+        res.render('asesorias/list_asesorado',{citas:citas[0]});
+    } catch (error) {
+        console.error(new Error(error));
+    }
 });
 
-router.get('/delete/:id',/*isLoggedIn,*/async(req,res)=>{
+router.get('/delete/:id',isLoggedIn,async(req,res)=>{
     const {id} = req.params;
-    await pool.query('DELETE FROM citas WHERE id = ?',[id]);
-    req.flash('success','Asesoria removida');
+    try {
+        await controller.deleteDate(id);
+        req.flash('success','Asesoría removida');
+    } catch (error) {
+        console.error(new Error(error));
+        req.flash('message',"No se pudo eliminar asesoría");
+    }
     res.redirect('/asesoria/list_asesor');
     
 });
 
-router.get('/edit/:id',/*isLoggedIn,*/async(req,res)=>{
+router.get('/edit/:id',isLoggedIn,async(req,res)=>{
     const {id} = req.params;
-    const asesorias = await pool.query('SELECT * FROM citas WHERE id = ?',[id]);
-    res.render('asesorias/edit',{asesorias:asesorias[0]});
+    try {
+        const asesorias = await controller.getDateById(id);
+        res.render('asesorias/edit',{asesorias:asesorias[0]});
+    } catch (error) {
+        console.error(new Error(error));
+    }
 });
 
-router.post('/edit/:id',/*isLoggedIn,*/(req,res)=>{
+router.post('/edit/:id',isLoggedIn,async(req,res)=>{
+
     const {id} = req.params;
-    const { materia,lugar,descripcion,dia,hora } = req.body;
-        const newCita = {
-            materia,
-            lugar,
-            descripcion,
-            dia,
-            hora
-        };
-    pool.query('UPDATE citas SET ? WHERE id = ?',[newCita,id]);
-    req.flash('success','Asesoria editada');
+    try {
+        await controller.editDate(req.body,id);
+        req.flash('success','Asesoría editada');
+    } catch (error) {
+        console.error(new Error(error));
+        req.flash('message',"No se pudo editar");
+    }
     res.redirect('/asesoria/list_asesor');
 });
 
 router.get('/dismiss/:id',async(req,res)=>{
+
     const {id} = req.params;
-    await pool.query(`UPDATE citas SET estudiante_id = NULL WHERE id = ${id}`);
-    req.flash('success',"Aseosría Abandonada");
+    try {
+        await controller.dismissDate(id);
+        req.flash('success',"Aseosría Abandonada");
+    } catch (error) {
+        req.flash('message',"No se pudo completar la acción");
+    }
     res.redirect('/');
 });
  
