@@ -8,6 +8,8 @@ const session = require('express-session');
 const MySqlStore = require('express-mysql-session');
 const passport = require('passport');
 const {database}=require('./keys');
+const { Console } = require('console');
+require('dotenv').config();
 // Inicializations
 
 const app = express();
@@ -60,7 +62,6 @@ app.use('/asesoria',require('./routes/asesoria'));
 app.use(express.static(path.join(__dirname,'public')));
 
 // Starting Server
-
-app.listen(config.api.port,()=>{
-    console.log(`Escuchando en: http://localhost:${config.api.port}`);
+app.listen(process.env.SERVER_PORT,()=>{
+    console.log(`Escuchando en: http://localhost:${process.env.SERVER_PORT}`);
 });
