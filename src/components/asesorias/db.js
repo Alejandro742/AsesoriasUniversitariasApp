@@ -21,7 +21,7 @@ async function getDateById(id){
 };
 
 async function editDate(updatedDate,id){
-    return await pool.query('UPDATE citas SET ? WHERE id = ?',[updatedDate,id]);
+    return await pool.query(`UPDATE citas SET ? WHERE id = ${id}`,[updatedDate]);
 };
 async function dismissDate(id) {
     return await pool.query(`UPDATE citas SET estudiante_id = NULL WHERE id = ${id}`);

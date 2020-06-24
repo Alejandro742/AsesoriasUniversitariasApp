@@ -34,7 +34,6 @@ module.exports = function(injectedStore){
         return await db.getDateById(id);
     };
     async function editDate(body,id){
-        const objectId = {id};
         const { materia,lugar,descripcion,dia,hora } = body;
         const updatedDate = {
             materia,
@@ -43,7 +42,7 @@ module.exports = function(injectedStore){
             dia,
             hora
         };
-        return await db.editDate(updatedDate,objectId);
+        return await db.editDate(updatedDate,id);
     };
     async function dismissDate(id){
         return await db.dismissDate(id);
@@ -57,5 +56,6 @@ module.exports = function(injectedStore){
         deleteDate,
         getDateById,
         dismissDate,
+        editDate,
     }
 }

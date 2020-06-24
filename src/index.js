@@ -53,7 +53,7 @@ app.use((req,res,next)=>{
 
 // Routes
 app.use(require('./components/index'));
-// app.use(require('./components/authentication/network'));
+app.use(require('./components/authentication/authentication'));
 app.use('/asesoria',require('./components/asesorias/network'));
 
 // Publics
