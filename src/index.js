@@ -8,7 +8,6 @@ const session = require('express-session');
 const MySqlStore = require('express-mysql-session');
 const passport = require('passport');
 const {database}=require('./keys');
-const { Console } = require('console');
 require('dotenv').config();
 // Inicializations
 
@@ -53,9 +52,9 @@ app.use((req,res,next)=>{
 });
 
 // Routes
-app.use(require('./routes'));
-app.use(require('./routes/authentication'));
-app.use('/asesoria',require('./routes/asesoria'));
+app.use(require('./components/index'));
+// app.use(require('./components/authentication/network'));
+app.use('/asesoria',require('./components/asesorias/network'));
 
 // Publics
 

@@ -1,8 +1,8 @@
 const express = require('express');
-const {isLoggedIn,isNotLoggedIn} = require('../lib/auth');
+const {isLoggedIn,isNotLoggedIn} = require('../../lib/auth');
 const router = express.Router();
 const passport = require('passport');
-const pool = require('../database');
+const pool = require('../../database');
 
 
 router.get('/signup',(req,res)=>{
